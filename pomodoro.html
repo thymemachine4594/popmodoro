@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timer</title>
+<style>
+    .timer {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .controls {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="timer" id="timer">00:00:00</div>
+
+<div class="controls">
+    <input type="number" id="hoursInput" placeholder="Hours">
+    <input type="number" id="minutesInput" placeholder="Minutes">
+    <input type="number" id="secondsInput" placeholder="Seconds">
+    <button id="startButton" onclick="startTimer()">Start</button>
+    <button id="pauseButton" onclick="pauseTimer()">Pause</button>
+</div>
+
+<script>
+var timerInterval;
+var timerRunning = false;
+var timer = 0;
+
+function startTimer() {
+    if (!timerRunning) {
+        var hours = parseInt(document.getElementById("hoursInput").value) || 0;
+        var minutes = parseInt(document.getElementById("minutesInput").value) || 0;
+        var seconds = parseInt(document.getElementById("secondsInput").value) || 0;
+        timer = hours * 3600 + minutes * 60 + seconds;
+        if (timer > 0) {
+            updateTimerDisplay();
+            timerInterval = setInterval(function () {
+                if (timer > 0) {
+                    timer--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                }
+            }, 1000);
+            timerRunning = true;
+        }
+    }
+}
+
+function pauseTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+}
+
+function updateTimerDisplay() {
+    var hours = Math.floor(timer / 3600);
+    var minutes = Math.floor((timer % 3600) / 60);
+    var seconds = Math.floor(timer % 60);
+
+    var hoursStr = hours < 10 ? "0" + hours : hours;
+    var minutesStr = minutes < 10 ? "0" + minutes : minutes;
+    var secondsStr = seconds < 10 ? "0" + seconds : seconds;
+
+    document.getElementById("timer").textContent = hoursStr + ":" + minutesStr + ":" + secondsStr;
+}
+</script>
+
+</body>
+</html>
+<html>
+<head>
+    <title> draft </title>
+</head>
+<body>
+    <center>
+    <h1>Task Manager</h1>
+    </center>
+    <ul id="todo-list">
+    <center>
+                  
+        <li>
+            <span>Task 1</span>
+                   <button onclick="editTask(this)">Edit</button>
+        </li>
+        <li>
+            <span>Task 2</span>
+            <button onclick="editTask(this)">Edit</button>
+        </li>
+        <li>
+            <span>Task 3</span>
+            <button onclick="editTask(this)">Edit</button>
+        </li>
+        <li>
+            <span>Task 4</span>
+            <button onclick="editTask(this)">Edit</button>
+        </li>
+        <li>
+            <span>Task 5</span>
+            <button onclick="editTask(this)">Edit</button>
+           
+        </li>
+   </center>
+    </ul>
+
+    <script>
+        function editTask(button) {
+            var listItem = button.parentNode;
+            var taskText = listItem.querySelector("span").textContent;
+            var newTaskText = prompt("Enter the task:", taskText);
+            if (newTaskText !== null) {
+                listItem.querySelector("span").textContent = newTaskText;
+            }
+        }
+
+        function deleteTask(button) {
+            var listItem = button.parentNode;
+            listItem.parentNode.removeChild(listItem);
+        }
+    </script>
+</body>
+</html>
