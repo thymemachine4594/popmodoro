@@ -1,3 +1,16 @@
+<!background>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>popdoro</title>
+</head>
+<body background="C:\users\mybook\Downloads\p3.jpg">
+</body>
+</html>
+
+<!timer>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,26 +19,31 @@
 <title>Timer</title>
 <style>
     .timer {
-        font-size: 24px;
+        font-size: 80px;
         text-align: center;
-        margin-top: 50px;
+        margin-top: 100px;
     }
     .controls {
+        font-style: Garamond;
         text-align: center;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 </style>
 </head>
 <body>
 
+<audio id="timerAudio" src="C:\users\mybook\Music\4K YouTube to MP3\Chill Village 🌙 Chill Lofi Mix [chill lo-fi hip hop beats].mp3"></audio>
+
 <div class="timer" id="timer">00:00:00</div>
 
 <div class="controls">
     <input type="number" id="hoursInput" placeholder="Hours">
+    <style>
     <input type="number" id="minutesInput" placeholder="Minutes">
     <input type="number" id="secondsInput" placeholder="Seconds">
     <button id="startButton" onclick="startTimer()">Start</button>
     <button id="pauseButton" onclick="pauseTimer()">Pause</button>
+    <button id="muteButton" onclick="stopAudio()">Mute</button>
 </div>
 
 <script>
@@ -48,9 +66,12 @@ function startTimer() {
                 } else {
                     clearInterval(timerInterval);
                     timerRunning = false;
+                    stopAudio();
+                   playBeepSound();
                 }
             }, 1000);
             timerRunning = true;
+            playAudio();
         }
     }
 }
@@ -58,6 +79,7 @@ function startTimer() {
 function pauseTimer() {
     clearInterval(timerInterval);
     timerRunning = false;
+    stopAudio();
 }
 
 function updateTimerDisplay() {
@@ -71,24 +93,45 @@ function updateTimerDisplay() {
 
     document.getElementById("timer").textContent = hoursStr + ":" + minutesStr + ":" + secondsStr;
 }
+
+function playAudio() {
+    var audio = document.getElementById("timerAudio");
+    audio.play();
+}
+
+function stopAudio() {
+    var audio = document.getElementById("timerAudio");
+    audio.pause();
+    audio.currentTime = 0;
+}
+function playBeepSound() {
+    // Create an Audio object and set the source to a beep sound file
+    var beepSound = new Audio('beep.mp3');
+    
+    // Play the beep sound
+    beepSound.play();
+}
 </script>
 
 </body>
 </html>
+
+<!to do list>
 <html>
 <head>
     <title> draft </title>
 </head>
 <body>
     <center>
-    <h1>Task Manager</h1>
+    <h1>pop focus</h1>
     </center>
     <ul id="todo-list">
     <center>
                   
         <li>
             <span>Task 1</span>
-                   <button onclick="editTask(this)">Edit</button>
+            <button onclick="editTask(this)">Edit</button>
+                   
         </li>
         <li>
             <span>Task 2</span>
@@ -125,5 +168,56 @@ function updateTimerDisplay() {
             listItem.parentNode.removeChild(listItem);
         }
     </script>
+</body>
+</html>
+
+<!motivational quotes>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motivational Quotes</title>
+  <style>
+    /* Style the quote container */
+    #quote-container {
+      font-size: 20px;
+      text-align: center;
+      padding: 15px;
+      border: 1px solid #ccc;
+      margin: 20px auto;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="quote-container">
+    <p id="quote-text">Loading...</p>
+  </div>
+
+  <script>
+    // Array of motivational quotes
+    const quotes = [
+      "The only way to achieve the impossible is to believe it is possible.",
+      "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+      "Believe you can and you're halfway there.",
+      "Success is walking from failure to failure with no loss of enthusiasm.",
+      "Your limitation—it's only your imagination.",
+      "The secret of getting ahead is getting started."
+    ];
+
+    // Function to display a random quote
+    function displayQuote() {
+      const quoteContainer = document.getElementById('quote-text');
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      quoteContainer.textContent = quotes[randomIndex];
+    }
+
+    // Initial display
+    displayQuote();
+
+    // Change quote every 2 minutes (120,000 milliseconds)
+    setInterval(displayQuote, 120000);
+  </script>
 </body>
 </html>
