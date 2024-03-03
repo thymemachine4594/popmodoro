@@ -22,7 +22,7 @@
         
         font-size: 80px;
         text-align: center;
-        margin-top: 100px;
+        margin-top: 50px;
     }
     .controls {
         font-style: Garamond;
@@ -119,59 +119,115 @@ function playBeepSound() {
 </html>
 
 <!to do list>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title> draft </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editable Tasks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    input[type="text"] {
+      width: calc(100% - 80px);
+      padding: 8px;
+      margin-right: 10px;
+    }
+    
+    button {
+      padding: 8px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    li {
+      margin: 10px 0;
+    }
+    
+    li span {
+      cursor: pointer;
+    }
+    
+    li span:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <center>
-    <h1 style="color: #5C5858;">Pop focus</h1>
+    <h1 style="color:#5C5858;">Pop-focus</h1>
     </center>
-    <ul id="todo-list">
-    <center>
-                  
-        <li>
-            <span>Task 1</span>
-            <button onclick="editTask(this)">Edit</button>
-               
-        </li>
-        <li>
-            <span>Task 2</span>
-            <button onclick="editTask(this)">Edit</button>
-        </li>
-        <li>
-            <span>Task 3</span>
-            <button onclick="editTask(this)">Edit</button>
-        </li>
-        <li>
-            <span>Task 4</span>
-            <button onclick="editTask(this)">Edit</button>
-        </li>
-        <li>
-            <span>Task 5</span>
-            <button onclick="editTask(this)">Edit</button>
-           
-        </li>
-   </center>
-    </ul>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button id="addTaskBtn">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
 
-    <script>
-        function editTask(button) {
-            var listItem = button.parentNode;
-            var taskText = listItem.querySelector("span").textContent;
-            var newTaskText = prompt("Enter the task:", taskText);
-            if (newTaskText !== null) {
-                listItem.querySelector("span").textContent = newTaskText;
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const taskInput = document.getElementById('taskInput');
+      const addTaskBtn = document.getElementById('addTaskBtn');
+      const taskList = document.getElementById('taskList');
+
+      addTaskBtn.addEventListener('click', function() {
+        const taskText = taskInput.value.trim();
+        if (taskText !== '') {
+          const listItem = document.createElement('li');
+          const span = document.createElement('span');
+          span.textContent = taskText;
+          listItem.appendChild(span);
+          taskList.appendChild(listItem);
+          taskInput.value = '';
+        }
+      });
+
+      taskList.addEventListener('click', function(event) {
+        if (event.target.tagName === 'SPAN') {
+          const editableSpan = document.createElement('input');
+          editableSpan.type = 'text';
+          editableSpan.value = event.target.textContent;
+          event.target.replaceWith(editableSpan);
+          editableSpan.focus();
+
+          editableSpan.addEventListener('blur', function() {
+            const newText = editableSpan.value.trim();
+            if (newText !== '') {
+              const newSpan = document.createElement('span');
+              newSpan.textContent = newText;
+              editableSpan.replaceWith(newSpan);
+            } else {
+              const originalText = editableSpan.dataset.originalText;
+              const originalSpan = document.createElement('span');
+              originalSpan.textContent = originalText;
+              editableSpan.replaceWith(originalSpan);
             }
+          });
         }
-
-        function deleteTask(button) {
-            var listItem = button.parentNode;
-            listItem.parentNode.removeChild(listItem);
-        }
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
+
 
 <!motivational quotes>
 <!DOCTYPE html>
@@ -185,10 +241,10 @@ function playBeepSound() {
     #quote-container {
       font-size: 20px;
       text-align: center;
-      padding: 15px;
+      padding: 10px;
       border: 1px solid #ccc;
-      margin: 20px auto;
-      max-width: 400px;
+      margin: 10px auto;
+      max-width: 600px;
     }
   </style>
 </head>
